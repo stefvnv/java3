@@ -79,14 +79,19 @@ public class Customer {
     }
 
     public static void main(String[] args) {
+
+        //create customers
         Customer c1 = new Customer(987999999);
         Customer c2 = new Customer("Martina Curran", "AIT, Athlone", 999999999, "billpay");
         Customer c3 = new Customer("Sierra the Dog", 989898989);
         Customer c4 = new Customer(444444444, "prepay");
 
+        //printing using printDetails method
         c1.printDetails();
         c2.printDetails();
-        c3.printDetails();
-        c4.printDetails();
+
+        //printing using getters
+        System.out.println(c3.getName() + c3.address + c3.number + c3.plan);
+        System.out.println(c4.getName() + c4.address + c4.number + c4.plan);
     }
 }
