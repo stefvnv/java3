@@ -91,7 +91,7 @@ public class Customer {
         c2.printDetails();
 
         //printing using getters
-        System.out.println(c3.getName() + c3.address + c3.number + c3.plan);
-        System.out.println(c4.getName() + c4.address + c4.number + c4.plan);
+        System.out.println(c3.getName() + ", " + c3.address + ", " + c3.number + ", " + c3.plan);
+        System.out.println(c4.getName() + ", " + c4.address + ", " + c4.number + ", " + c4.plan);
     }
 }
