@@ -29,10 +29,12 @@ public class Person {
         this.address = address;
     }
 
+    public static void main(String[] args) {
+        Person p1 = new Person();
+        Person p2 = new Person("Stefana");
+        Person p3 = new Person ("Mary", "Cork");
+        Person p4 = new Person("Claire", 94324843);
+        Person p5 = new Person("Sierra", 99999999, "Athlone");
 
-    Person p1 = new Person();
-    Person p2 = new Person("Stefana");
-    Person p3 = new Person ("Mary", "Cork");
-    Person p4 = new Person("Claire", 94324843);
-    Person p5 = new Person("Sierra", 99999999, "Athlone");
+    }
 }
