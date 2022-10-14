@@ -20,6 +20,7 @@ public class GUI implements ActionListener {
         buttonA.setBackground(Color.GREEN);
         buttonB.setBackground(Color.ORANGE);
 
+
         panel.add(checkBox);
         panel.add(buttonA);
         panel.add(buttonB);

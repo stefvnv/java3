@@ -4,6 +4,7 @@ public class Person {
     private int age;
     private int rent;
 
+
     //constructor
     public Person() {
         this.name = null;
