@@ -46,7 +46,5 @@ public class Person {
         this.rent = rent;
     }
 
-    @Override
-    public String toString
 
 }
