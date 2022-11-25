@@ -2,12 +2,16 @@ import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
-public class ClientView extends JFrame implements ChangeListener {
+public class ClientView extends JFrame implements ChangeListener, TableModelListener {
 
 
     //Declaring tabbed pane
@@ -185,31 +189,53 @@ public class ClientView extends JFrame implements ChangeListener {
 
         this.add(tabbedPane, BorderLayout.CENTER);
         this.setVisible(true);
+        table.putClientProperty("terminateEditOnFocusLost", true);
 
     }
+
+    public ArrayList<ClientModel> updateData() {
+        ArrayList<ClientModel> cm = new ArrayList<>();
+
+        for (int i = 0; i < table.getRowCount(); i++) {
+            cm.add(new ClientModel(table.getValueAt(i, 0).toString(), table.getValueAt(i, 1).toString(), table.getValueAt(i, 2).toString(), table.getValueAt(i, 3).toString(), table.getValueAt(i, 4).toString(), table.getValueAt(i, 5).toString(), table.getValueAt(i, 6).toString(), table.getValueAt(i, 7).toString()));
+        }
+        System.out.println(table.getValueAt(0, 0));
+        return cm;
+    }
+
+    public ClientModel getNew() {
+
+        return new ClientModel(idText.getText(), ownerNameText.getText(), petNameText.getText(), addressText.getText(), speciesText.getText(), breedText.getText(), dobText.getText(), neuteredText.getText());
+
+
+    }
+
+    public void clearAddFields() {
+        JOptionPane.showMessageDialog(null, "Added new record");
+        idText.setText("");
+        ownerNameText.setText("");
+        petNameText.setText("");
+        addressText.setText("");
+        speciesText.setText("");
+        breedText.setText("");
+        dobText.setText("");
+        neuteredText.setText("");
+    }
+
 
     /**
      * Repopulates table by re-reading arraylist
      */
     public void updateTable(ArrayList<ClientModel> clientList) {
-
         String[] columns = {"ID", "Owner Name", "Pet Name", "Address", "Species", "Breed", "Date of Birth", "Neutered"};
 
         DefaultTableModel dtm = new DefaultTableModel(columns, 0);
         for (ClientModel element : clientList) {
 
-            dtm.addRow(new Object[]{
-                    element.getId(),
-                    element.getOwnerName(),
-                    element.getPetName(),
-                    element.getAddress(),
-                    element.getSpecies(),
-                    element.getBreed(),
-                    element.getDOB(),
-                    element.getNeutered()
-            });
+            dtm.addRow(new Object[]{element.getId(), element.getOwnerName(), element.getPetName(), element.getAddress(), element.getSpecies(), element.getBreed(), element.getDOB(), element.getNeutered()});
         }
         table.setModel(dtm);
+
     }
 
 
@@ -233,6 +259,29 @@ public class ClientView extends JFrame implements ChangeListener {
 
 
     public int getClickedIndex() {
-        return table.getSelectedRow();
+        if (table.getSelectedRow() > -1) {
+
+
+            return table.getSelectedRow();
+        }
+
+        return -1;
+    }
+
+    public void successDeleteMessage() {
+        JOptionPane.showMessageDialog(null, "Deleted record successfully.");
+    }
+
+    public void emptyMessage() {
+        JOptionPane.showMessageDialog(null, "No records to delete.");
+    }
+
+    public void alertSelectRecord() {
+        JOptionPane.showMessageDialog(null, "Please select a record to delete.");
+    }
+
+    @Override
+    public void tableChanged(TableModelEvent e) {
+
     }
 }

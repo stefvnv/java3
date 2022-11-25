@@ -1,6 +1,5 @@
 import java.io.*;
 import java.util.ArrayList;
-import java.util.List;
 
 public class Serialize {
 
@@ -15,27 +14,28 @@ public class Serialize {
     }
 
     public ArrayList<ClientModel> getClientList() {
-        return clientList;
+        return deserializedClientList;
     }
 
-    List<ClientModel> deserializedClientList;
+    ArrayList<ClientModel> deserializedClientList;
 
     public void runner() throws IOException {
         clientList = new ArrayList<>();
 
-        clientList.add(new ClientModel(653, "Molly Anderson", "Sierra", "432 Rochester Drive, Athlone", "Dog", "Siberian Husky", "07/01/2017", "No"));
-        clientList.add(new ClientModel(942, "Elliot Martin", "Matilda", "8692 Springfield, Dublin", "Cat", "Bengal", "23/06/2020", "Yes"));
-        clientList.add(new ClientModel(765, "George Black", "Wolfy", "42 River Street, Athlone", "Dog", "German Shepherd", "21/05/2015", "No"));
-        clientList.add(new ClientModel(663, "Kerry Houston", "Robyn", "98 Animalview, Longford", "Guinea Pig", "Himalayan", "23/06/2022", "Yes"));
-        clientList.add(new ClientModel(138, "Peter Leen", "Spotty", "872 Cow Street, Ballymahon", "Dog", "Dalmatian", "05/08/2021", "No"));
-        clientList.add(new ClientModel(986, "Mary Perry", "Maxwell", "7 Patrick Street, Dublin", "Lizard", "Long-Tailed Gecko", "06/11/2021", "No"));
-        clientList.add(new ClientModel(904, "Ben Tenders", "Mittens", "982 Sunset Street, Mullingar", "Feline", "British Shorthair", "23/06/2017", "Yes"));
+        clientList.add(new ClientModel("653", "Molly Anderson", "Sierra", "432 Rochester Drive, Athlone", "Dog", "Siberian Husky", "07/01/2017", "No"));
+        clientList.add(new ClientModel("942", "Elliot Martin", "Matilda", "8692 Springfield, Dublin", "Cat", "Bengal", "23/06/2020", "Yes"));
+        clientList.add(new ClientModel("765", "George Black", "Wolfy", "42 River Street, Athlone", "Dog", "German Shepherd", "21/05/2015", "No"));
+        clientList.add(new ClientModel("663", "Kerry Houston", "Robyn", "98 Animalview, Longford", "Guinea Pig", "Himalayan", "23/06/2022", "Yes"));
+        clientList.add(new ClientModel("138", "Peter Leen", "Spotty", "872 Cow Street, Ballymahon", "Dog", "Dalmatian", "05/08/2021", "No"));
+        clientList.add(new ClientModel("986", "Mary Perry", "Maxwell", "7 Patrick Street, Dublin", "Lizard", "Long-Tailed Gecko", "06/11/2021", "No"));
+        clientList.add(new ClientModel("904", "Ben Tenders", "Mittens", "982 Sunset Street, Mullingar", "Feline", "British Shorthair", "23/06/2017", "Yes"));
 
         try {
             //Deserializing
+
             FileInputStream fileIn = new FileInputStream("client.ser");
             ObjectInputStream objectIn = new ObjectInputStream(fileIn);
-
+            System.out.println("DESERIALIZING HERE");
             deserializedClientList = (ArrayList) objectIn.readObject();
             objectIn.close();
 
@@ -49,5 +49,13 @@ public class Serialize {
 
             objectOut.writeObject(clientList);
         }
+    }
+
+    public void runner(ArrayList<ClientModel> updatedList) throws IOException {
+        System.out.println("reserializing");
+        FileOutputStream fileOut = new FileOutputStream("client.ser");
+        ObjectOutputStream objectOut = new ObjectOutputStream(fileOut);
+
+        objectOut.writeObject(updatedList);
     }
 }

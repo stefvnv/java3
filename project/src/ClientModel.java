@@ -1,7 +1,7 @@
 import java.io.Serializable;
 
 public class ClientModel implements Serializable {
-    private int id;
+    private String id;
     private String ownerName;
     private String petName;
     private String address;
@@ -10,7 +10,7 @@ public class ClientModel implements Serializable {
     private String dateOfBirth;
     private String neutered;
 
-    public ClientModel(int id, String ownerName, String petName, String address, String species, String breed, String dateOfBirth, String neutered){
+    public ClientModel(String id, String ownerName, String petName, String address, String species, String breed, String dateOfBirth, String neutered){
         this.id = id;
         this.ownerName = ownerName;
         this.petName = petName;
@@ -21,11 +21,11 @@ public class ClientModel implements Serializable {
         this.neutered = neutered;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
