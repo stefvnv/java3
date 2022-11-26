@@ -13,18 +13,21 @@ import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 
 public class ClientController extends UnicastRemoteObject implements RmiInterface {
+
+    //Stores Serialize and ClientView objects as variables
     private final Serialize serialize;
     private final ClientView view;
 
     private ArrayList<ClientModel> clientList;
 
     public ClientController() throws RemoteException {
-
         super();
 
         serialize = new Serialize();
 
         clientList = serialize.getClientList();
+
+
         if (clientList.size() > 0) {
             System.out.println(clientList.get(0).getOwnerName());
         } else {
@@ -33,12 +36,12 @@ public class ClientController extends UnicastRemoteObject implements RmiInterfac
 
         this.view = new ClientView();
 
+        //Calls methods
         view.init();
         addEventListenerDeleteToGUI();
         addEventListenerEditToGUI();
         addEventListenerAddToGUI();
         rmi();
-
         setUpTable();
     }
 

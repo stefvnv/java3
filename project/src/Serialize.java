@@ -26,6 +26,10 @@ public class Serialize {
 
     ArrayList<ClientModel> deserializedClientList;
 
+
+    /**
+     *
+     */
     public void runner() throws IOException {
         clientList = new ArrayList<>();
 
@@ -35,18 +39,18 @@ public class Serialize {
         clientList.add(new ClientModel("663", "Kerry Houston", "Robyn", "98 Animalview, Longford", "Guinea Pig", "Himalayan", "23/06/2022", "Yes"));
         clientList.add(new ClientModel("138", "Peter Leen", "Spotty", "872 Cow Street, Ballymahon", "Dog", "Dalmatian", "05/08/2021", "No"));
         clientList.add(new ClientModel("986", "Mary Perry", "Maxwell", "7 Patrick Street, Dublin", "Lizard", "Long-Tailed Gecko", "06/11/2021", "No"));
-        clientList.add(new ClientModel("904", "Ben Tenders", "Mittens", "982 Sunset Street, Mullingar", "Feline", "British Shorthair", "23/06/2017", "Yes"));
+        clientList.add(new ClientModel("904", "Ben Tenders", "Mittens", "982 Sunset Street, Mullingar", "Cat", "British Shorthair", "23/06/2017", "Yes"));
+        clientList.add(new ClientModel("874", "Beatrice West", "Luna", "343 Bungalow Road, Athlone", "Dog", "Akita", "02/12/2022", "No"));
 
         try {
             //Deserializing
-
             FileInputStream fileIn = new FileInputStream("client.ser");
             ObjectInputStream objectIn = new ObjectInputStream(fileIn);
-            System.out.println("DESERIALIZING HERE");
+            System.out.println("Deserializing...");
+
+
             deserializedClientList = (ArrayList) objectIn.readObject();
             objectIn.close();
-
-
         } catch (FileNotFoundException | ClassNotFoundException e) {
             System.out.println("Sorry file is not available... will create one!");
 
@@ -58,11 +62,16 @@ public class Serialize {
         }
     }
 
+
+    /**
+     *
+     */
     public void runner(ArrayList<ClientModel> updatedList) throws IOException {
-        System.out.println("reserializing");
+        System.out.println("Re-serializing...");
+
+        //Deserializing
         FileOutputStream fileOut = new FileOutputStream("client.ser");
         ObjectOutputStream objectOut = new ObjectOutputStream(fileOut);
-
         objectOut.writeObject(updatedList);
     }
 }

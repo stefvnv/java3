@@ -7,16 +7,19 @@
 
 import java.io.Serializable;
 
-public class ClientModel implements Serializable{
-    private String id;
-    private String ownerName;
-    private String petName;
-    private String address;
-    private String species;
-    private String breed;
-    private String dateOfBirth;
-    private String neutered;
+public class ClientModel implements Serializable {
 
+    //Model variables
+    private final String id;
+    private final String ownerName;
+    private final String petName;
+    private final String address;
+    private final String species;
+    private final String breed;
+    private final String dateOfBirth;
+    private final String neutered;
+
+    //Constructor
     public ClientModel(String id, String ownerName, String petName, String address, String species, String breed, String dateOfBirth, String neutered) {
         this.id = id;
         this.ownerName = ownerName;
@@ -28,82 +31,81 @@ public class ClientModel implements Serializable{
         this.neutered = neutered;
     }
 
+    /**
+     * Returns ID
+     */
     public String getId() {
         return id;
     }
 
-    public void setId(String id) {
-        this.id = id;
-    }
-
+    /**
+     * Returns owner name
+     */
     public String getOwnerName() {
         return ownerName;
     }
 
-    public void setOwnerName(String ownerName) {
-        this.ownerName = ownerName;
-    }
 
+    /**
+     * Returns pet name
+     */
     public String getPetName() {
         return petName;
     }
 
-    public void setPetName(String petName) {
-        this.petName = petName;
-    }
 
+    /**
+     * Returns owner address
+     */
     public String getAddress() {
         return address;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
-    }
 
+    /**
+     * Returns pet species
+     */
     public String getSpecies() {
         return species;
     }
 
-    public void setSpecies(String species) {
-        this.species = species;
-    }
 
+    /**
+     * Returns pet breed
+     */
     public String getBreed() {
         return breed;
     }
 
-    public void setBreed(String breed) {
-        this.breed = breed;
-    }
 
+    /**
+     * Returns pet date of birth
+     */
     public String getDOB() {
         return dateOfBirth;
     }
 
-    public void setDOB(String dateOfBirth) {
-        this.dateOfBirth = dateOfBirth;
-    }
 
+    /**
+     * Returns pet neutered status
+     */
     public String getNeutered() {
         return neutered;
     }
 
-    public void setNeutered(String neutered) {
-        this.neutered = neutered;
-    }
 
-
+    /**
+     * Overrides toString method to print all details of a client
+     */
     @Override
     public String toString() {
-        return "ClientModel{" +
-                "id='" + id + '\'' +
-                ", ownerName='" + ownerName + '\'' +
-                ", petName='" + petName + '\'' +
-                ", address='" + address + '\'' +
-                ", species='" + species + '\'' +
-                ", breed='" + breed + '\'' +
-                ", dateOfBirth='" + dateOfBirth + '\'' +
-                ", neutered='" + neutered + '\'' +
-                '}';
+        return "ClientModel{" + "id='" + id + '\''
+                + ", ownerName='" + ownerName + '\''
+                + ", petName='" + petName + '\''
+                + ", address='" + address + '\''
+                + ", species='" + species + '\''
+                + ", breed='" + breed + '\''
+                + ", dateOfBirth='" + dateOfBirth + '\''
+                + ", neutered='" + neutered + '\'' + '}';
     }
 }

@@ -15,6 +15,7 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Random;
 
 public class ClientView extends JFrame implements ChangeListener, TableModelListener {
 
@@ -67,13 +68,11 @@ public class ClientView extends JFrame implements ChangeListener, TableModelList
         this.setSize(750, 500);
         this.setLayout(new BorderLayout());
         this.setResizable(false);
-
-        //Colours
     }
 
 
     /**
-     * Initializes the GUI
+     * Initializes the GUI, sets grid-bag layout in both panels and places table, buttons and text boxes in grid-bag
      */
     public void init() {
 
@@ -105,6 +104,9 @@ public class ClientView extends JFrame implements ChangeListener, TableModelList
         c.gridwidth = 1;
         panelAll.add(deleteButton, c);
 
+        table.setBackground(new Color(238, 220, 220));
+        panelAll.setBackground(new Color(238, 220, 220));
+
 
         //======Panel add======
         panelAdd.setLayout(new GridBagLayout());
@@ -118,6 +120,7 @@ public class ClientView extends JFrame implements ChangeListener, TableModelList
         c.gridx = 1;
         c.gridy = 0;
         panelAdd.add(idText, c);
+        idText.setEditable(false);
 
         c.gridx = 0;
         c.gridy = 1;
@@ -180,22 +183,29 @@ public class ClientView extends JFrame implements ChangeListener, TableModelList
         c.gridwidth = 2;
         panelAdd.add(addButton, c);
 
-
         c.fill = GridBagConstraints.BOTH;
         c.weightx = 1.0;
         c.weighty = 1.0;
 
+        panelAdd.setBackground(new Color(238, 220, 220));
+
         //Add panels to tabbed pane and set visibility to true
         tabbedPane.add("All Clients", panelAll);
         tabbedPane.add("Add Client", panelAdd);
-        // tabbedPane.addChangeListener(this);
 
-        this.add(tabbedPane, BorderLayout.CENTER);
-        this.setVisible(true);
+        add(tabbedPane, BorderLayout.CENTER);
+        setVisible(true);
+
+        //Stops editing tab in table when focus is lost
         table.putClientProperty("terminateEditOnFocusLost", true);
 
+        insertRandomID();
     }
 
+
+    /**
+     *
+     */
     public ArrayList<ClientModel> updateData() {
         ArrayList<ClientModel> cm = new ArrayList<>();
 
@@ -206,13 +216,34 @@ public class ClientView extends JFrame implements ChangeListener, TableModelList
         return cm;
     }
 
-    public ClientModel getNew() {
 
-        return new ClientModel(idText.getText(), ownerNameText.getText(), petNameText.getText(), addressText.getText(), speciesText.getText(), breedText.getText(), dobText.getText(), neuteredText.getText());
+    /**
+     * Inserts random ID into ID text box
+     */
+    public void insertRandomID() {
 
+        //Initializes a Random object
+        Random random = new Random();
 
+        //Generates a random int from 0 to 899, then adds 100
+        int randomID = Integer.parseInt(Integer.toString(random.nextInt(900) + 100));
+
+        //Sets text box to new random value
+        idText.setText(String.valueOf(randomID));
     }
 
+
+    /**
+     * Returns new client model with data from entry boxes on add client panel
+     */
+    public ClientModel getNew() {
+        return new ClientModel(idText.getText(), ownerNameText.getText(), petNameText.getText(), addressText.getText(), speciesText.getText(), breedText.getText(), dobText.getText(), neuteredText.getText());
+    }
+
+
+    /**
+     * Clears all entry fields in add client panel
+     */
     public void clearAddFields() {
         JOptionPane.showMessageDialog(null, "Added new record");
         idText.setText("");
@@ -223,6 +254,8 @@ public class ClientView extends JFrame implements ChangeListener, TableModelList
         breedText.setText("");
         dobText.setText("");
         neuteredText.setText("");
+
+        insertRandomID();
     }
 
 
@@ -230,15 +263,18 @@ public class ClientView extends JFrame implements ChangeListener, TableModelList
      * Repopulates table by re-reading arraylist
      */
     public void updateTable(ArrayList<ClientModel> clientList) {
+
+        //Creates an array of columns/headings for table
         String[] columns = {"ID", "Owner Name", "Pet Name", "Address", "Species", "Breed", "Date of Birth", "Neutered"};
 
+        //Creates table with number of columns from columns array
         DefaultTableModel dtm = new DefaultTableModel(columns, 0);
-        for (ClientModel element : clientList) {
 
+        //Populates table with rows from client list object
+        for (ClientModel element : clientList) {
             dtm.addRow(new Object[]{element.getId(), element.getOwnerName(), element.getPetName(), element.getAddress(), element.getSpecies(), element.getBreed(), element.getDOB(), element.getNeutered()});
         }
         table.setModel(dtm);
-
     }
 
 
@@ -248,37 +284,70 @@ public class ClientView extends JFrame implements ChangeListener, TableModelList
 
     }
 
+
+    /**
+     * Adds action listener to edit button, sets colour
+     */
     public void editEventButton(ActionListener alEdit) {
         editButton.addActionListener(alEdit);
         editButton.setBackground(Color.pink);
     }
 
+
+    /**
+     * Adds action listened to delete button, sets colour
+     */
     public void deleteEventButton(ActionListener alDelete) {
         deleteButton.addActionListener(alDelete);
+        deleteButton.setBackground(Color.pink);
     }
 
+
+    /**
+     * Adds action listened to add button, sets colour
+     */
     public void addEventButton(ActionListener alAdd) {
         addButton.addActionListener(alAdd);
+        addButton.setBackground(Color.pink);
     }
 
 
+    /**
+     * @return
+     */
     public int getClickedIndex() {
         return Math.max(table.getSelectedRow(), -1);
 
     }
 
+
+    /**
+     *
+     */
     public void successDeleteMessage() {
         JOptionPane.showMessageDialog(null, "Deleted record successfully.");
     }
 
+
+    /**
+     *
+     */
     public void emptyMessage() {
         JOptionPane.showMessageDialog(null, "No records to delete.");
     }
 
+
+    /**
+     *
+     */
     public void alertSelectRecord() {
         JOptionPane.showMessageDialog(null, "Please select a record to delete.");
     }
 
+
+    /**
+     * @param e
+     */
     @Override
     public void tableChanged(TableModelEvent e) {
     }
