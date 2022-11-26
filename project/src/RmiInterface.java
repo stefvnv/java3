@@ -12,7 +12,6 @@ import java.util.ArrayList;
 /**
  * Interface that implements RMI
  */
-
 public interface RmiInterface extends Remote {
 
     //Abstract methods to be inherited
