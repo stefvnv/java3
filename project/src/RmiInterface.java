@@ -9,9 +9,14 @@ import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 
+/**
+ * Interface that implements RMI
+ */
+
 public interface RmiInterface extends Remote {
 
-    //
-    public void rmi()throws RemoteException;
+    //Abstract methods to be inherited
+    public void rmi() throws RemoteException;
+
     public ArrayList<ClientModel> getClientList() throws RemoteException;
 }

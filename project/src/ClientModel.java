@@ -19,7 +19,9 @@ public class ClientModel implements Serializable {
     private final String dateOfBirth;
     private final String neutered;
 
-    //Constructor
+    /**
+     * Constructor
+     */
     public ClientModel(String id, String ownerName, String petName, String address, String species, String breed, String dateOfBirth, String neutered) {
         this.id = id;
         this.ownerName = ownerName;
@@ -95,17 +97,18 @@ public class ClientModel implements Serializable {
 
 
     /**
-     * Overrides toString method to print all details of a client
+     * Overrides toString method to print all details of a client, inherited from RMI interface
      */
     @Override
     public String toString() {
-        return "ClientModel{" + "id='" + id + '\''
-                + ", ownerName='" + ownerName + '\''
-                + ", petName='" + petName + '\''
-                + ", address='" + address + '\''
-                + ", species='" + species + '\''
-                + ", breed='" + breed + '\''
-                + ", dateOfBirth='" + dateOfBirth + '\''
-                + ", neutered='" + neutered + '\'' + '}';
+        return "Client - "
+                + "ID: " + id
+                + ", Owner: " + ownerName
+                + ", Pet name: " + petName
+                + ", Address: " + address
+                + ", Species: " + species
+                + ", Breed: " + breed
+                + ", Pets' Date of birth: " + dateOfBirth
+                + ", Neutered: " + neutered;
     }
 }

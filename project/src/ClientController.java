@@ -14,18 +14,16 @@ import java.util.ArrayList;
 
 public class ClientController extends UnicastRemoteObject implements RmiInterface {
 
-    //Stores Serialize and ClientView objects as variables
+    //Initializes variables
     private final Serialize serialize;
     private final ClientView view;
-
     private ArrayList<ClientModel> clientList;
 
     public ClientController() throws RemoteException {
         super();
 
+        //Gets list of clients via serialization/deserialization
         serialize = new Serialize();
-
-        //Serializes client list
         clientList = serialize.getClientList();
 
         //Adds an empty client to client list if list is empty
@@ -54,7 +52,7 @@ public class ClientController extends UnicastRemoteObject implements RmiInterfac
 
 
     /**
-     *
+     * Adds an event listener to update button on GUI
      */
     public void addEventListenerUpdateToGUI() {
         view.updateEventButton(e -> {
@@ -66,7 +64,7 @@ public class ClientController extends UnicastRemoteObject implements RmiInterfac
 
 
     /**
-     *
+     * Adds an event listener to delete button on GUI
      */
     public void addEventListenerDeleteToGUI() {
         view.deleteEventButton(e -> {
@@ -88,7 +86,7 @@ public class ClientController extends UnicastRemoteObject implements RmiInterfac
 
 
     /**
-     *
+     * Adds an event listener to add button on GUI
      */
     public void addEventListenerAddToGUI() {
         view.addEventButton(e -> {
@@ -101,7 +99,7 @@ public class ClientController extends UnicastRemoteObject implements RmiInterfac
 
 
     /**
-     *
+     * Re-serializes the list
      */
     public void updateFile() {
         try {
@@ -113,33 +111,16 @@ public class ClientController extends UnicastRemoteObject implements RmiInterfac
 
 
     /**
-     *
+     * Gets the data from the GUI and puts into the list after editing
      */
     public void updateFromTableToFile() {
         clientList = view.updateData();
         updateFile();
     }
 
-    /**
-     *
-     */
-    @Override
-    public void rmi() {
-        System.out.println("RMI server initiated...");
-        try {
-            LocateRegistry.createRegistry(6600);
-
-            // binds the object "clientList" to the rmi URI
-            Naming.rebind("rmi://localhost:6600/controllerObject", this);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
 
     /**
-     *
+     * Gets the client list
      */
     public ArrayList<ClientModel> getClientList() {
         System.out.println("Client has received data...");
@@ -148,14 +129,18 @@ public class ClientController extends UnicastRemoteObject implements RmiInterfac
 
 
     /**
-     * Starts the application
+     * Starts RMI server
      */
-    public static void main(String[] args) {
+    @Override
+    public void rmi() {
+        System.out.println("RMI server initiated...");
         try {
-            new ClientController();
-        } catch (RemoteException e) {
-            throw new RuntimeException(e);
+            LocateRegistry.createRegistry(6600);
+
+            //Binds the clientList object to the rmi address
+            Naming.rebind("rmi://localhost:6600/controllerObject", this);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
-
 }

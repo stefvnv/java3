@@ -200,7 +200,7 @@ public class ClientView extends JFrame implements ChangeListener, TableModelList
 
 
     /**
-     *
+     * Loops through the rows of table, returning a client list after updating table entries
      */
     public ArrayList<ClientModel> updateData() {
         ArrayList<ClientModel> cm = new ArrayList<>();
@@ -208,8 +208,15 @@ public class ClientView extends JFrame implements ChangeListener, TableModelList
         for (int i = 0; i < table.getRowCount(); i++) {
             cm.add(new ClientModel(table.getValueAt(i, 0).toString(), table.getValueAt(i, 1).toString(), table.getValueAt(i, 2).toString(), table.getValueAt(i, 3).toString(), table.getValueAt(i, 4).toString(), table.getValueAt(i, 5).toString(), table.getValueAt(i, 6).toString(), table.getValueAt(i, 7).toString()));
         }
-        System.out.println(table.getValueAt(0, 0));
         return cm;
+    }
+
+
+    /**
+     * Returns new client model with data from entry boxes on add client panel
+     */
+    public ClientModel getNew() {
+        return new ClientModel(idText.getText(), ownerNameText.getText(), petNameText.getText(), addressText.getText(), speciesText.getText(), breedText.getText(), dobText.getText(), neuteredText.getText());
     }
 
 
@@ -230,18 +237,10 @@ public class ClientView extends JFrame implements ChangeListener, TableModelList
 
 
     /**
-     * Returns new client model with data from entry boxes on add client panel
-     */
-    public ClientModel getNew() {
-        return new ClientModel(idText.getText(), ownerNameText.getText(), petNameText.getText(), addressText.getText(), speciesText.getText(), breedText.getText(), dobText.getText(), neuteredText.getText());
-    }
-
-
-    /**
-     * Clears all entry fields in add client panel
+     * Clears all entry fields in add client panel, calls insertRandomID method
      */
     public void clearAddFields() {
-        JOptionPane.showMessageDialog(null, "Added new record");
+        JOptionPane.showMessageDialog(null, "New record added successfully.");
         idText.setText("");
         ownerNameText.setText("");
         petNameText.setText("");
@@ -271,13 +270,6 @@ public class ClientView extends JFrame implements ChangeListener, TableModelList
             dtm.addRow(new Object[]{element.getId(), element.getOwnerName(), element.getPetName(), element.getAddress(), element.getSpecies(), element.getBreed(), element.getDOB(), element.getNeutered()});
         }
         table.setModel(dtm);
-    }
-
-
-    @Override
-    public void stateChanged(ChangeEvent e) {
-
-
     }
 
 
@@ -320,7 +312,7 @@ public class ClientView extends JFrame implements ChangeListener, TableModelList
      * Displays message dialog for updating a record
      */
     public void successUpdateMessage() {
-        JOptionPane.showMessageDialog(null, "Record has been UPDATED successfully.");
+        JOptionPane.showMessageDialog(null, "Record has been updated successfully.");
     }
 
 
@@ -328,7 +320,7 @@ public class ClientView extends JFrame implements ChangeListener, TableModelList
      * Displays message dialog for deleting a record
      */
     public void successDeleteMessage() {
-        JOptionPane.showMessageDialog(null, "Record has been DELETED successfully.");
+        JOptionPane.showMessageDialog(null, "Record has been deleted successfully.");
     }
 
 
@@ -351,5 +343,9 @@ public class ClientView extends JFrame implements ChangeListener, TableModelList
     //Unused
     @Override
     public void tableChanged(TableModelEvent e) {
+    }
+
+    @Override
+    public void stateChanged(ChangeEvent e) {
     }
 }

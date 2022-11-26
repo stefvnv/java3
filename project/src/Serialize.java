@@ -13,7 +13,7 @@ public class Serialize {
 
 
     /**
-     *
+     * Constructor
      */
     public Serialize() {
         try {
@@ -25,7 +25,7 @@ public class Serialize {
 
 
     /**
-     *
+     * Returns the deserialized list
      */
     public ArrayList<ClientModel> getClientList() {
         return deserializedClientList;
@@ -35,7 +35,7 @@ public class Serialize {
 
 
     /**
-     *
+     * Serializes/deserializes the data at the beginning of the program
      */
     public void runner() throws IOException {
         clientList = new ArrayList<>();
@@ -71,12 +71,12 @@ public class Serialize {
 
 
     /**
-     *
+     * Serializes the list that is passed in
      */
     public void runner(ArrayList<ClientModel> updatedList) throws IOException {
         System.out.println("Re-serializing...");
 
-        //Deserializing
+        //Serializing
         FileOutputStream fileOut = new FileOutputStream("client.ser");
         ObjectOutputStream objectOut = new ObjectOutputStream(fileOut);
         objectOut.writeObject(updatedList);
