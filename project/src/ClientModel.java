@@ -1,6 +1,13 @@
+/**
+ * Research Project
+ * MVC - ClientModel
+ * Stefana Chiritescu
+ * A00282343
+ */
+
 import java.io.Serializable;
 
-public class ClientModel implements Serializable {
+public class ClientModel implements Serializable{
     private String id;
     private String ownerName;
     private String petName;
@@ -10,7 +17,7 @@ public class ClientModel implements Serializable {
     private String dateOfBirth;
     private String neutered;
 
-    public ClientModel(String id, String ownerName, String petName, String address, String species, String breed, String dateOfBirth, String neutered){
+    public ClientModel(String id, String ownerName, String petName, String address, String species, String breed, String dateOfBirth, String neutered) {
         this.id = id;
         this.ownerName = ownerName;
         this.petName = petName;
@@ -85,4 +92,18 @@ public class ClientModel implements Serializable {
         this.neutered = neutered;
     }
 
+
+    @Override
+    public String toString() {
+        return "ClientModel{" +
+                "id='" + id + '\'' +
+                ", ownerName='" + ownerName + '\'' +
+                ", petName='" + petName + '\'' +
+                ", address='" + address + '\'' +
+                ", species='" + species + '\'' +
+                ", breed='" + breed + '\'' +
+                ", dateOfBirth='" + dateOfBirth + '\'' +
+                ", neutered='" + neutered + '\'' +
+                '}';
+    }
 }

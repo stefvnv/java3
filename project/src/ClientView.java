@@ -1,3 +1,10 @@
+/**
+ * Research Project
+ * MVC - ClientView
+ * Stefana Chiritescu
+ * A00282343
+ */
+
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -6,9 +13,7 @@ import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class ClientView extends JFrame implements ChangeListener, TableModelListener {
@@ -50,8 +55,6 @@ public class ClientView extends JFrame implements ChangeListener, TableModelList
 
 
     private final JTextField neuteredText = new JTextField(12);
-
-    private int clickedIndex = 0;
 
 
     /**
@@ -247,6 +250,7 @@ public class ClientView extends JFrame implements ChangeListener, TableModelList
 
     public void editEventButton(ActionListener alEdit) {
         editButton.addActionListener(alEdit);
+        editButton.setBackground(Color.pink);
     }
 
     public void deleteEventButton(ActionListener alDelete) {
@@ -259,13 +263,8 @@ public class ClientView extends JFrame implements ChangeListener, TableModelList
 
 
     public int getClickedIndex() {
-        if (table.getSelectedRow() > -1) {
+        return Math.max(table.getSelectedRow(), -1);
 
-
-            return table.getSelectedRow();
-        }
-
-        return -1;
     }
 
     public void successDeleteMessage() {
@@ -282,6 +281,5 @@ public class ClientView extends JFrame implements ChangeListener, TableModelList
 
     @Override
     public void tableChanged(TableModelEvent e) {
-
     }
 }

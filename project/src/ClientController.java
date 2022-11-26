@@ -1,17 +1,26 @@
-import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+/**
+ * Research Project
+ * MVC - ClientController
+ * Stefana Chiritescu
+ * A00282343
+ */
+
 import java.io.IOException;
+import java.rmi.Naming;
+import java.rmi.RemoteException;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 
-public class ClientController {
-    //private ClientModel model;
+public class ClientController extends UnicastRemoteObject implements RmiInterface {
     private final Serialize serialize;
     private final ClientView view;
 
-    private ArrayList<ClientModel> clientList = new ArrayList<>();
+    private ArrayList<ClientModel> clientList;
 
-    public ClientController() {
+    public ClientController() throws RemoteException {
+
+        super();
 
         serialize = new Serialize();
 
@@ -28,18 +37,23 @@ public class ClientController {
         addEventListenerDeleteToGUI();
         addEventListenerEditToGUI();
         addEventListenerAddToGUI();
+        rmi();
 
         setUpTable();
     }
 
+
+    /**
+     *
+     */
     private void setUpTable() {
         view.updateTable(clientList);
     }
 
-    public ArrayList<ClientModel> getClientList() {
-        return clientList;
-    }
 
+    /**
+     *
+     */
     public void addEventListenerEditToGUI() {
         view.editEventButton(e -> {
             updateFromTableToFile();
@@ -47,6 +61,10 @@ public class ClientController {
         });
     }
 
+
+    /**
+     *
+     */
     public void addEventListenerDeleteToGUI() {
         view.deleteEventButton(e -> {
             if (clientList.size() > 0) {
@@ -66,6 +84,10 @@ public class ClientController {
         });
     }
 
+
+    /**
+     *
+     */
     public void addEventListenerAddToGUI() {
         view.addEventButton(e -> {
             clientList.add(view.getNew());
@@ -75,6 +97,10 @@ public class ClientController {
         });
     }
 
+
+    /**
+     *
+     */
     public void updateFile() {
         try {
             serialize.runner(clientList);
@@ -83,13 +109,51 @@ public class ClientController {
         }
     }
 
+
+    /**
+     *
+     */
     public void updateFromTableToFile() {
         clientList = view.updateData();
         updateFile();
     }
 
+    /**
+     *
+     */
+    @Override
+    public void rmi() {
+        System.out.println("RMI server initiated...");
+        try {
+            LocateRegistry.createRegistry(6600);
 
-    public static void main(String[] args) {
-        new ClientController();
+            // binds the object "clientList" to the rmi URI
+            Naming.rebind("rmi://localhost:6600/controllerObject", this);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
+
+
+    /**
+     * @return clientList object
+     */
+    public ArrayList<ClientModel> getClientList() {
+        System.out.println("Client has received data...");
+        return clientList;
+    }
+
+
+    /**
+     * Starts the application
+     */
+    public static void main(String[] args) {
+        try {
+            new ClientController();
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 }

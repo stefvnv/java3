@@ -1,3 +1,10 @@
+/**
+ * Research Project
+ * Serialize
+ * Stefana Chiritescu
+ * A00282343
+ */
+
 import java.io.*;
 import java.util.ArrayList;
 
