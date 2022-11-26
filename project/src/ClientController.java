@@ -69,7 +69,6 @@ public class ClientController extends UnicastRemoteObject implements RmiInterfac
     public void addEventListenerDeleteToGUI() {
         view.deleteEventButton(e -> {
             if (clientList.size() > 0) {
-                System.out.println("size = " + clientList.size());
                 if (view.getClickedIndex() > -1) {
                     clientList.remove(view.getClickedIndex());
                     view.successDeleteMessage();
