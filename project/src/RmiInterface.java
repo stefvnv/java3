@@ -10,8 +10,8 @@ import java.rmi.RemoteException;
 import java.util.ArrayList;
 
 public interface RmiInterface extends Remote {
+
+    //
     public void rmi()throws RemoteException;
     public ArrayList<ClientModel> getClientList() throws RemoteException;
-
-
 }

@@ -32,7 +32,7 @@ public class ClientView extends JFrame implements ChangeListener, TableModelList
 
     //Declaring buttons
     private final JButton deleteButton = new JButton("Delete");
-    private final JButton editButton = new JButton("Edit");
+    private final JButton updateButton = new JButton("Update");
     private final JButton addButton = new JButton("Add");
 
     //Declaring labels
@@ -53,8 +53,6 @@ public class ClientView extends JFrame implements ChangeListener, TableModelList
     private final JTextField speciesText = new JTextField(12);
     private final JTextField breedText = new JTextField(12);
     private final JTextField dobText = new JTextField(12);
-
-
     private final JTextField neuteredText = new JTextField(12);
 
 
@@ -72,7 +70,7 @@ public class ClientView extends JFrame implements ChangeListener, TableModelList
 
 
     /**
-     * Initializes the GUI, sets grid-bag layout in both panels and places table, buttons and text boxes in grid-bag
+     * Initializes the GUI, sets grid-bag layout in both panels and adds table, buttons and text boxes to layout
      */
     public void init() {
 
@@ -95,18 +93,13 @@ public class ClientView extends JFrame implements ChangeListener, TableModelList
         c.gridy = 1;
         c.weighty = .1;
         c.gridwidth = 1;
-        panelAll.add(editButton, c);
-
+        panelAll.add(updateButton, c);
 
         c.gridx = 1;
         c.gridy = 1;
         c.weighty = .1;
         c.gridwidth = 1;
         panelAll.add(deleteButton, c);
-
-        table.setBackground(new Color(238, 220, 220));
-        panelAll.setBackground(new Color(238, 220, 220));
-
 
         //======Panel add======
         panelAdd.setLayout(new GridBagLayout());
@@ -187,18 +180,21 @@ public class ClientView extends JFrame implements ChangeListener, TableModelList
         c.weightx = 1.0;
         c.weighty = 1.0;
 
+        //Sets table and panels colors
+        table.setBackground(new Color(238, 220, 220));
+        panelAll.setBackground(new Color(238, 220, 220));
         panelAdd.setBackground(new Color(238, 220, 220));
 
         //Add panels to tabbed pane and set visibility to true
         tabbedPane.add("All Clients", panelAll);
         tabbedPane.add("Add Client", panelAdd);
-
         add(tabbedPane, BorderLayout.CENTER);
         setVisible(true);
 
         //Stops editing tab in table when focus is lost
         table.putClientProperty("terminateEditOnFocusLost", true);
 
+        //Calls method
         insertRandomID();
     }
 
@@ -286,11 +282,11 @@ public class ClientView extends JFrame implements ChangeListener, TableModelList
 
 
     /**
-     * Adds action listener to edit button, sets colour
+     * Adds action listener to update button, sets colour
      */
-    public void editEventButton(ActionListener alEdit) {
-        editButton.addActionListener(alEdit);
-        editButton.setBackground(Color.pink);
+    public void updateEventButton(ActionListener alUpdate) {
+        updateButton.addActionListener(alUpdate);
+        updateButton.setBackground(Color.pink);
     }
 
 
@@ -313,41 +309,46 @@ public class ClientView extends JFrame implements ChangeListener, TableModelList
 
 
     /**
-     * @return
+     * Returns index of selected row
      */
     public int getClickedIndex() {
         return Math.max(table.getSelectedRow(), -1);
-
     }
 
 
     /**
-     *
+     * Displays message dialog for updating a record
+     */
+    public void successUpdateMessage() {
+        JOptionPane.showMessageDialog(null, "Record has been UPDATED successfully.");
+    }
+
+
+    /**
+     * Displays message dialog for deleting a record
      */
     public void successDeleteMessage() {
-        JOptionPane.showMessageDialog(null, "Deleted record successfully.");
+        JOptionPane.showMessageDialog(null, "Record has been DELETED successfully.");
     }
 
 
     /**
-     *
-     */
-    public void emptyMessage() {
-        JOptionPane.showMessageDialog(null, "No records to delete.");
-    }
-
-
-    /**
-     *
+     * Displays message dialog for no records selected
      */
     public void alertSelectRecord() {
-        JOptionPane.showMessageDialog(null, "Please select a record to delete.");
+        JOptionPane.showMessageDialog(null, "A record must be selected to be deleted.");
     }
 
 
     /**
-     * @param e
+     * Displays message dialog for no records to delete
      */
+    public void emptyMessage() {
+        JOptionPane.showMessageDialog(null, "There are no records to delete.");
+    }
+
+
+    //Unused
     @Override
     public void tableChanged(TableModelEvent e) {
     }

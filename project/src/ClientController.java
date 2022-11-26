@@ -25,12 +25,11 @@ public class ClientController extends UnicastRemoteObject implements RmiInterfac
 
         serialize = new Serialize();
 
+        //Serializes client list
         clientList = serialize.getClientList();
 
-
-        if (clientList.size() > 0) {
-            System.out.println(clientList.get(0).getOwnerName());
-        } else {
+        //Adds an empty client to client list if list is empty
+        if (clientList.size() == 0) {
             clientList.add(new ClientModel(null, null, null, null, null, null, null, null));
         }
 
@@ -39,7 +38,7 @@ public class ClientController extends UnicastRemoteObject implements RmiInterfac
         //Calls methods
         view.init();
         addEventListenerDeleteToGUI();
-        addEventListenerEditToGUI();
+        addEventListenerUpdateToGUI();
         addEventListenerAddToGUI();
         rmi();
         setUpTable();
@@ -47,7 +46,7 @@ public class ClientController extends UnicastRemoteObject implements RmiInterfac
 
 
     /**
-     *
+     * Updates table by calling updateTable method from ClientView
      */
     private void setUpTable() {
         view.updateTable(clientList);
@@ -57,10 +56,11 @@ public class ClientController extends UnicastRemoteObject implements RmiInterfac
     /**
      *
      */
-    public void addEventListenerEditToGUI() {
-        view.editEventButton(e -> {
+    public void addEventListenerUpdateToGUI() {
+        view.updateEventButton(e -> {
             updateFromTableToFile();
             setUpTable();
+            view.successUpdateMessage();
         });
     }
 
@@ -83,7 +83,6 @@ public class ClientController extends UnicastRemoteObject implements RmiInterfac
             } else {
                 view.emptyMessage();
             }
-
         });
     }
 
@@ -140,7 +139,7 @@ public class ClientController extends UnicastRemoteObject implements RmiInterfac
 
 
     /**
-     * @return clientList object
+     *
      */
     public ArrayList<ClientModel> getClientList() {
         System.out.println("Client has received data...");

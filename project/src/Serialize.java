@@ -9,9 +9,12 @@ import java.io.*;
 import java.util.ArrayList;
 
 public class Serialize {
-
     private ArrayList<ClientModel> clientList;
 
+
+    /**
+     *
+     */
     public Serialize() {
         try {
             runner();
@@ -20,6 +23,10 @@ public class Serialize {
         }
     }
 
+
+    /**
+     *
+     */
     public ArrayList<ClientModel> getClientList() {
         return deserializedClientList;
     }
@@ -52,7 +59,7 @@ public class Serialize {
             deserializedClientList = (ArrayList) objectIn.readObject();
             objectIn.close();
         } catch (FileNotFoundException | ClassNotFoundException e) {
-            System.out.println("Sorry file is not available... will create one!");
+            System.out.println("File did not exist and has now been created.\nRun program again.");
 
             //Serializing
             FileOutputStream fileOut = new FileOutputStream("client.ser");
